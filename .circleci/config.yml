@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  test:
+    steps:
+      - checkout
+      - run: echo "This step runs test suite"
+      - run: sleep 5
+  build:
+    steps:
+      - checkout
+      - run: echo "This step build docker images"
+      - run: sleep 5
+  test_build:
+    steps:
+      - run: echo "This step tests the docker image"
+  deploy_staging:
+    steps:
+      - run: echo "This step deploys to staging environment"
+  deploy_production:
+    steps:
+      - run: echo "This step deploys to production environment"
+
+workflows:
+  version: 2
+  test_branch:
+    jobs:
+      - test
