@@ -98,15 +98,17 @@ workflows:
   test_branch:
     jobs:
       - checkout_repository
-      - test
+      - test:
+          requires:
+            - checkout_repository
 
   deploy_release:
     jobs:
-      - checkout_repository
-      - bump:
+      - checkout_repository:
           filters:
             branches:
               only: /dev/
+      - bump:
           requires:
             - checkout_repository
       - build:
