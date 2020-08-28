@@ -50,10 +50,10 @@ jobs:
           command: |
             go get github.com/tcnksm/ghr
             COMMIT_MSG=$(git log -1 --pretty=%B | cat)
-            SCOPE=
-            if [[ echo "${COMMIT_MSG,,}" =~ ^.*\#major.*$ ]]; then
+            COMMIT_MSG=b="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
+            if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
               SCOPE=major
-            elif [[ echo "${COMMIT_MSG,,}" =~ ^.*\#minor.*$ ]]; then
+            elif [[ ${COMMIT_MSG} =~ ^.*\#minor.*$ ]]; then
               SCOPE=minor
             else
               SCOPE=patch
