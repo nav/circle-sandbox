@@ -35,3 +35,23 @@ workflows:
   test_branch:
     jobs:
       - test
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - dev
+      - test_build:
+          requires:
+            - build
+      - deploy_staging:
+          requires:
+            - test_build
+      - hold_deploy_production:
+          type: approval
+          requires:
+            - test_build
+      - deploy_production:
+          requires:
+            - hold_deploy_production
