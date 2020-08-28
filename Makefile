@@ -6,8 +6,8 @@ test:			## Run test suite
 
 .PHONY: build
 build:			## Build docker image
-	echo "This is a demo of building docker image."
+	echo "This is a demo of building docker image with version ${VERSION}"
 
 .PHONY: publish
 publish:		## Publish docker image to Docker registry
-	echo "This is a demo of publishing docker image."
+	echo "This is a demo of publishing docker image with version ${VERSION}"

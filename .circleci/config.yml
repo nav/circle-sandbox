@@ -26,19 +26,7 @@ jobs:
           command: |
             make test
 
-  build:
-    docker:
-      - image: circleci/python:3.8
-    working_directory: *workspace
-    steps:
-      - attach_workspace:
-          at: *workspace
-      - run:
-          name: Build docker image
-          command: |
-            make build
-
-  bump:
+  tag:
     docker:
       - image: circleci/python:3.8
     working_directory: *workspace
@@ -49,7 +37,7 @@ jobs:
           name: Increment version tag
           command: |
             COMMIT_MSG=$(git log -1 --pretty=%B | cat)
-            COMMIT_MSG=b="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
+            COMMIT_MSG="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
             if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
               SCOPE=major
             elif [[ ${COMMIT_MSG} =~ ^.*\#minor.*$ ]]; then
@@ -67,6 +55,18 @@ jobs:
           paths:
             - .
 
+  build:
+    docker:
+      - image: circleci/python:3.8
+    working_directory: *workspace
+    steps:
+      - attach_workspace:
+          at: *workspace
+      - run:
+          name: Build docker image
+          command: |
+            VERSION=$(cat VERSION) make build
+
   publish:
     docker:
       - image: circleci/python:3.8
@@ -77,7 +77,7 @@ jobs:
       - run:
           name: Publish Docker image to ECR
           command: |
-            make publish
+            VERSION=$(cat VERSION) make publish
 
   deploy_staging:
     docker:
@@ -98,7 +98,10 @@ workflows:
 
   test_branch:
     jobs:
-      - checkout_repository
+      - checkout_repository:
+          filters:
+            branches:
+              ignore: /dev/
       - test:
           requires:
             - checkout_repository
@@ -109,12 +112,12 @@ workflows:
           filters:
             branches:
               only: /dev/
-      - bump:
+      - tag:
           requires:
             - checkout_repository
       - build:
           requires:
-            - bump
+            - tag
       - publish:
           requires:
             - build
