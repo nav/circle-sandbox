@@ -54,10 +54,10 @@ workflows:
 
   deploy_release:
     jobs:
-      - bump
+      - semver-orb/bump
       - build:
           requires:
-            - bump
+            - semver-orb/bump
       - publish:
           requires:
             - build
