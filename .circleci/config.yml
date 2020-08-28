@@ -40,7 +40,7 @@ jobs:
 
   bump:
     docker:
-      - image: circleci/golang:1.8
+      - image: circleci/golang:1.13
     working_directory: *workspace
     steps:
       - attach_workspace:
@@ -97,11 +97,18 @@ workflows:
 
   test_branch:
     jobs:
+      - checkout_repository
       - test
 
   deploy_release:
     jobs:
-      - bump
+      - checkout_repository
+      - bump:
+          filters:
+            branches:
+              only: /dev/
+          requires:
+            - checkout_repository
       - build:
           requires:
             - bump
