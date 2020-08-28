@@ -45,6 +45,9 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace
+      - add_ssh_keys:
+          fingerprints:
+            - "16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48"
       - run:
           name: Increment version tag
           command: |
@@ -63,7 +66,6 @@ jobs:
 
             VERSION=$(./scripts/semtag final -s ${SCOPE} -o)
 
-            ssh-keyscan -p 443 ssh.github.com >> ~/.ssh/known_hosts
             /tmp/ghr -t ${GITHUB_PAT} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
             echo ${VERSION} > VERSION
       - persist_to_workspace:
