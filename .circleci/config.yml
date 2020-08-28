@@ -31,6 +31,8 @@ jobs:
       - image: circleci/python:3.8
     working_directory: *workspace
     steps:
+      - attach_workspace:
+          at: *workspace
       - run:
           name: Increment version tag
           command: |
