@@ -1,14 +1,26 @@
 version: 2.1
 
-orbs:
-  semver-orb: tv2norge/semver-orb@0.0.1
+variables:
+  - &workspace /home/circleci/project
 
 jobs:
-  test:
+  checkout_repository:
     docker:
       - image: circleci/python:3.8
     steps:
       - checkout
+      - persist_to_workspace:
+        root: *workspace
+        paths:
+          - .
+
+  test:
+    docker:
+      - image: circleci/python:3.8
+    working_directory: *workspace
+    steps:
+      - attach_workspace:
+          at: *workspace
       - run:
           name: Run unit tests
           command: |
@@ -17,17 +29,50 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.8
+    working_directory: *workspace
     steps:
-      - checkout
+      - attach_workspace:
+          at: *workspace
       - run:
           name: Build docker image
           command: |
             make build
 
+  bump:
+    docker:
+      - image: circleci/golang:1.8
+    working_directory: *workspace
+    steps:
+      - attach_workspace:
+          at: *workspace
+      - run:
+          name: Increment version tag
+          command: |
+            go get github.com/tcnksm/ghr
+            COMMIT_MSG=$(git log -1 --pretty=%B | cat)
+            SCOPE=
+            if [[ echo "${COMMIT_MSG,,}" =~ ^.*\#major.*$ ]]; then
+              SCOPE=major
+            elif [[ echo "${COMMIT_MSG,,}" =~ ^.*\#minor.*$ ]]; then
+              SCOPE=minor
+            else
+              SCOPE=patch
+            fi
+            VERSION=$(./scripts/semtag final -s ${SCOPE} -o)
+            ghr -t ${GITHUB_PAT} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
+            echo ${VERSION} > VERSION
+      - persist_to_workspace:
+          root: *workspace
+          paths:
+            - .
+
   publish:
     docker:
       - image: circleci/python:3.8
+    working_directory: *workspace
     steps:
+      - attach_workspace:
+          at: *workspace
       - run:
           name: Publish Docker image to ECR
           command: |
@@ -36,12 +81,14 @@ jobs:
   deploy_staging:
     docker:
       - image: circleci/python:3.8
+    working_directory: *workspace
     steps:
       - run: echo "This step deploys to staging environment"
 
   deploy_production:
     docker:
       - image: circleci/python:3.8
+    working_directory: *workspace
     steps:
       - run: echo "This step deploys to production environment"
 
