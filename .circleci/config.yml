@@ -1,29 +1,44 @@
-version: 2
+version: 2.1
+
+orbs:
+  semver-orb: tv2norge/semver-orb@0.0.1
+
 jobs:
   test:
     docker:
       - image: circleci/python:3.8
     steps:
       - checkout
-      - run: echo "This step runs test suite"
-      - run: sleep 5
+      - run:
+          name: Run unit tests
+          command: |
+            make test
+
   build:
     docker:
       - image: circleci/python:3.8
     steps:
       - checkout
-      - run: echo "This step build docker images"
-      - run: sleep 5
-  test_build:
+      - run:
+          name: Build docker image
+          command: |
+            make build
+
+  publish:
     docker:
       - image: circleci/python:3.8
     steps:
-      - run: echo "This step tests the docker image"
+      - run:
+          name: Publish Docker image to ECR
+          command: |
+            make publish
+
   deploy_staging:
     docker:
       - image: circleci/python:3.8
     steps:
       - run: echo "This step deploys to staging environment"
+
   deploy_production:
     docker:
       - image: circleci/python:3.8
@@ -32,26 +47,27 @@ jobs:
 
 workflows:
   version: 2
+
   test_branch:
     jobs:
       - test
-  build_and_deploy:
+
+  deploy_release:
     jobs:
+      - bump
       - build:
-          filters:
-            branches:
-              only:
-                - dev
-      - test_build:
+          requires:
+            - bump
+      - publish:
           requires:
             - build
       - deploy_staging:
           requires:
-            - test_build
+            - publish
       - hold_deploy_production:
           type: approval
           requires:
-            - test_build
+            - publish
       - deploy_production:
           requires:
             - hold_deploy_production
