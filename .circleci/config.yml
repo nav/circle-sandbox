@@ -48,9 +48,6 @@ jobs:
       - run:
           name: Increment version tag
           command: |
-            curl -o /tmp/ghr.tar.gz -L https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz
-            tar xzf /tmp/ghr.tar.gz --strip-components=1 -C /tmp
-
             COMMIT_MSG=$(git log -1 --pretty=%B | cat)
             COMMIT_MSG=b="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
             if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
@@ -61,9 +58,9 @@ jobs:
               SCOPE=patch
             fi
 
-            VERSION=$(./scripts/semtag final -s ${SCOPE} -o)
-            /tmp/ghr -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
-            echo ${VERSION} > VERSION
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+            ./scripts/semtag final -s ${SCOPE}
+            echo $(./scripts/semtag final -o) > VERSION
       - persist_to_workspace:
           root: *workspace
           paths:
