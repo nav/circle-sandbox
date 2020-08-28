@@ -58,6 +58,7 @@ jobs:
               SCOPE=patch
             fi
 
+            mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             ./scripts/semtag final -s ${SCOPE}
             echo $(./scripts/semtag final -o) > VERSION
