@@ -31,8 +31,6 @@ jobs:
       - image: circleci/python:3.8
     working_directory: *workspace
     steps:
-      - attach_workspace:
-          at: *workspace
       - run:
           name: Increment version tag
           command: |
@@ -49,7 +47,7 @@ jobs:
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             ./scripts/semtag final -s ${SCOPE}
-            echo $(./scripts/semtag final -o) > VERSION
+            echo $(./scripts/semtag getfinal) > VERSION
       - persist_to_workspace:
           root: *workspace
           paths:
