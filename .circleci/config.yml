@@ -10,9 +10,9 @@ jobs:
     steps:
       - checkout
       - persist_to_workspace:
-        root: *workspace
-        paths:
-          - .
+          root: *workspace
+          paths:
+            - .
 
   test:
     docker:
@@ -101,10 +101,10 @@ workflows:
 
   deploy_release:
     jobs:
-      - semver-orb/bump
+      - bump
       - build:
           requires:
-            - semver-orb/bump
+            - bump
       - publish:
           requires:
             - build
