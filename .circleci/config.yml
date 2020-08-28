@@ -45,9 +45,6 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace
-      - add_ssh_keys:
-          fingerprints:
-            - "16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48"
       - run:
           name: Increment version tag
           command: |
@@ -65,8 +62,7 @@ jobs:
             fi
 
             VERSION=$(./scripts/semtag final -s ${SCOPE} -o)
-
-            /tmp/ghr -t ${GITHUB_PAT} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
+            /tmp/ghr -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}
             echo ${VERSION} > VERSION
       - persist_to_workspace:
           root: *workspace
