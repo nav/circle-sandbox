@@ -17,7 +17,6 @@ jobs:
   test:
     docker:
       - image: circleci/python:3.8
-    working_directory: *workspace
     steps:
       - attach_workspace:
           at: *workspace
@@ -29,7 +28,6 @@ jobs:
   tag:
     docker:
       - image: circleci/python:3.8
-    working_directory: *workspace
     steps:
       - attach_workspace:
           at: *workspace
@@ -58,7 +56,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.8
-    working_directory: *workspace
     steps:
       - attach_workspace:
           at: *workspace
@@ -82,14 +79,12 @@ jobs:
   deploy_staging:
     docker:
       - image: circleci/python:3.8
-    working_directory: *workspace
     steps:
       - run: echo "This step deploys to staging environment"
 
   deploy_production:
     docker:
       - image: circleci/python:3.8
-    working_directory: *workspace
     steps:
       - run: echo "This step deploys to production environment"
 
