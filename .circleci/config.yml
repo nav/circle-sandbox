@@ -121,7 +121,7 @@ workflows:
             - checkout_repository
       - build:
           requires:
-            - tag
+            - release
       - publish:
           requires:
             - build
