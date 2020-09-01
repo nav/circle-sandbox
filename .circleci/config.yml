@@ -25,6 +25,15 @@ jobs:
           command: |
             make test
 
+  release:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - attach_workspace:
+          at: *workspace
+      - run: npm install -g semantic-release
+      - run: npx semantic-release
+
   tag:
     docker:
       - image: circleci/python:3.8
@@ -107,12 +116,12 @@ workflows:
           filters:
             branches:
               only: /dev/
-      - tag:
+      - release:
           requires:
             - checkout_repository
       - build:
           requires:
-            - tag
+            - release
       - publish:
           requires:
             - build
