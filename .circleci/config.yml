@@ -32,9 +32,14 @@ jobs:
       - attach_workspace:
           at: *workspace
       - run: 
+          name: Install semantic-release
           command: |
-           sudo npm install -g semantic-release @semantic-release/release-notes-generator
+           sudo npm install -g semantic-release \
+             @semantic-release/commit-analyzer \
+             @semantic-release/release-notes-generator \
+             @semantic-release/changelog
       - run:
+          name: Analyse and create new release
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
