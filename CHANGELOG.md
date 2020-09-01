@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/nav/circle-sandbox/compare/v0.4.7...v0.4.8) (2020-09-01)
+
+
+### Features
+
+* **ci:** The story continues ([7458dd5](https://github.com/nav/circle-sandbox/commit/7458dd50caad92d316d99713524102e42169ec61))
+
 ### [0.4.7](https://github.com/nav/circle-sandbox/compare/v0.4.6...v0.4.7) (2020-09-01)
 
 
