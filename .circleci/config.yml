@@ -33,7 +33,7 @@ jobs:
           at: *workspace
       - run: 
           command: |
-           sudo npm install -g semantic-release @semantic-release/release-notes-generator @semantic-release/npm
+           sudo npm install -g semantic-release @semantic-release/release-notes-generator
       - run:
           command: |
             mkdir -p ~/.ssh
