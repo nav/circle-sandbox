@@ -31,7 +31,7 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace
-      - run: npm install -g semantic-release
+      - run: npm install semantic-release
       - run: npx semantic-release
 
   tag:
