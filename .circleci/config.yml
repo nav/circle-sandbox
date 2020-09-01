@@ -36,7 +36,7 @@ jobs:
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            npx semantic-release
+            npx semantic-release --ci --branches=dev
 
   tag:
     docker:
