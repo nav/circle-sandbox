@@ -38,7 +38,12 @@ jobs:
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            npx semantic-release 
+            npx semantic-release
+            echo $(git describe --tags --abbrev=0) > VERSION
+      - persist_to_workspace:
+          root: *workspace
+          paths:
+            - .
 
   tag:
     docker:
