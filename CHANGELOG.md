@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/nav/circle-sandbox/compare/v0.4.5...v0.4.6) (2020-09-01)
+
+
+### Features
+
+* **ci:** This one is bound to work. ([ee9bcfd](https://github.com/nav/circle-sandbox/commit/ee9bcfda533f368c1b0e3e6a6d3aacbf3526e897))
+
+
+### Bug Fixes
+
+* **ci:** And this should push release to github ([0f48b4f](https://github.com/nav/circle-sandbox/commit/0f48b4f5eb0168e846e470635faaf8a7a284d84f))
+
 ### [0.4.5](https://github.com/nav/circle-sandbox/compare/v0.4.4...v0.4.5) (2020-09-01)
 
 ### [0.4.4](https://github.com/nav/circle-sandbox/compare/v0.4.3...v0.4.4) (2020-09-01)
