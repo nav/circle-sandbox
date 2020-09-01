@@ -32,19 +32,15 @@ jobs:
       - attach_workspace:
           at: *workspace
       - run: 
-          name: Install semantic-release
+          name: Install versioning and release tool
           command: |
-           sudo npm install -g semantic-release \
-             @semantic-release/commit-analyzer \
-             @semantic-release/release-notes-generator \
-             @semantic-release/changelog \
-             @semantic-release/github
+           sudo npm install -g standard-version
       - run:
           name: Create new release
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            npx semantic-release
+            npx standard-version --no-verify
             echo $(git describe --tags --abbrev=0) > VERSION
       - persist_to_workspace:
           root: *workspace
