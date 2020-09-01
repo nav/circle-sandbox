@@ -31,12 +31,14 @@ jobs:
     steps:
       - attach_workspace:
           at: *workspace
-      - run: npm install semantic-release
+      - run: 
+          command: |
+           sudo npm install -g semantic-release @semantic-release/release-notes-generator @semantic-release/npm
       - run:
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            npx semantic-release --ci --branches=dev
+            npx semantic-release 
 
   tag:
     docker:
