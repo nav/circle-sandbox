@@ -37,19 +37,15 @@ jobs:
            sudo npm install -g semantic-release \
              @semantic-release/commit-analyzer \
              @semantic-release/release-notes-generator \
-             @semantic-release/changelog
+             @semantic-release/changelog \
+             @semantic-release/github
       - run:
           name: Create new release
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             npx semantic-release
-
             echo $(git describe --tags --abbrev=0) > VERSION
-            curl -X POST -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/nav/circle-sandbox/releases \
-              -d '{"tag_name": "$(cat VERSION)", "name": "Release $(cat VERSION)", "body": "$(cat CHANGELOG.md)"}'
-            
       - persist_to_workspace:
           root: *workspace
           paths:
