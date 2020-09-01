@@ -40,36 +40,12 @@ jobs:
           command: |
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
+            git config user.email "engineering@nav.sh"
+            git config user.name "CircleCI"
             npx standard-version --no-verify
+
             echo $(git describe --tags --abbrev=0) > VERSION
-      - persist_to_workspace:
-          root: *workspace
-          paths:
-            - .
-
-  tag:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - attach_workspace:
-          at: *workspace
-      - run:
-          name: Increment version tag
-          command: |
-            COMMIT_MSG=$(git log -1 --pretty=%B | cat)
-            COMMIT_MSG="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
-            if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
-              SCOPE=major
-            elif [[ ${COMMIT_MSG} =~ ^.*\#minor.*$ ]]; then
-              SCOPE=minor
-            else
-              SCOPE=patch
-            fi
-
-            mkdir -p ~/.ssh
-            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            ./scripts/semtag final -s ${SCOPE}
-            echo $(./scripts/semtag getfinal) > VERSION
       - persist_to_workspace:
           root: *workspace
           paths:
