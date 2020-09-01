@@ -10,3 +10,10 @@ behave like any other tool he had tried earlier but after reading the documentat
 he realized that it is very close to the tool he wanted. It was not perfect but very
 close to it.
 
+So, he started using this tool. While he was using it, he noticed this tool only 
+bumped patch version regardless of the types mentioned in commit message. "Fuck!", he
+shouted. "Why the fuck would the create this exception when you are working on new
+project that has version < 1.0.0" he thought to himself. Fortunately, there was an
+easy fix. 
+
+To be continued...

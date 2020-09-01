@@ -43,7 +43,10 @@ jobs:
 
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
-            npx standard-version --no-verify
+            npx standard-version \
+              --no-verify \
+              --preMajor \
+              --releaseCommitMessageFormat="chore(release): {{currentTag}} [skip ci]"
             git push --follow-tags origin dev
 
             echo $(git describe --tags --abbrev=0) > VERSION
