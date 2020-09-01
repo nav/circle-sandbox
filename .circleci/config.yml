@@ -32,7 +32,11 @@ jobs:
       - attach_workspace:
           at: *workspace
       - run: npm install semantic-release
-      - run: npx semantic-release
+      - run:
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+            npx semantic-release
 
   tag:
     docker:
