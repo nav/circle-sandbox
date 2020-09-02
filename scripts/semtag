@@ -414,7 +414,7 @@ $__commitlist"
       local __remotes=$(git remote)
       if [[ -n $__remotes ]]; then
         for __remote in $__remotes; do
-          git push $__remote $__version > /dev/null
+          # git push $__remote $__version > /dev/null
           if [ $? -eq 0 ]; then
             echo "$__version pushed to $__remote"
           else
