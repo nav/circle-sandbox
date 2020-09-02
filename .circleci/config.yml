@@ -59,6 +59,7 @@ jobs:
               --no-verify \
               --skip.bump \
               --skip.tag \
+              --skip.commit \
               --releaseCommitMessageFormat="chore(release): ${VERSION} [skip ci]"
             git push --follow-tags origin dev
 
