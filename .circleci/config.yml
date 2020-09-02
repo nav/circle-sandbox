@@ -59,8 +59,9 @@ jobs:
               --no-verify \
               --skip.bump \
               --skip.tag \
-              --skip.commit \
-              --releaseCommitMessageFormat="chore(release): ${VERSION} [skip ci]"
+              --skip.commit
+            
+            git commit --no-verify CHANGELOG.md -m "chore(release): ${VERSION} [skip ci]"
             git push --follow-tags origin dev
 
             echo ${VERSION} > VERSION
