@@ -41,6 +41,14 @@ jobs:
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
+            git config user.email "engineering@nav.sh"
+            git config user.name "CircleCI"
+            npx standard-version \
+              --no-verify \
+              --skip.bump \
+              --skip.tag \
+              --skip.commit
+
             COMMIT_MSG=$(git log -1 --pretty=%B | cat)
             COMMIT_MSG="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
             if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
@@ -52,14 +60,6 @@ jobs:
             fi
             ./scripts/semtag final -s ${SCOPE}
             VERSION=$(git describe --tags --abbrev=0)
-
-            git config user.email "engineering@nav.sh"
-            git config user.name "CircleCI"
-            npx standard-version \
-              --no-verify \
-              --skip.bump \
-              --skip.tag \
-              --skip.commit
 
             cat CHANGELOG.md
             git add CHANGELOG.md            
