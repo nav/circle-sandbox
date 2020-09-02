@@ -22,7 +22,8 @@ are not sufficient individually.", he thought. He then realized he could use
 functions he needed from more than one tool. 
 
 He dusted off the tool, semtag, he had discarded earlier and tweaked 
-semantic-version. He put those two tools together to see what happens.
+semantic-version. He put those two tools together to see what happens. He created a
+new pull request with some random changes.
 
 
 To be continued...
