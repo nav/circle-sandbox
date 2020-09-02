@@ -16,8 +16,13 @@ shouted. "Why the fuck would the create this exception when you are working on n
 project that has version < 1.0.0" he thought to himself. Fortunately, there was an
 easy fix. 
 
-Well, that did not work. To move past this problem, he decided to create a 1.0 
-version and push it to the repository. 
+Well, that fix did not work. This brought him back to the drawing board and made him
+rethink his approach. "May be my requirements are unique enough that these tools 
+are not sufficient individually.", he thought. He then realized he could use
+functions he needed from more than one tool. 
+
+He dusted off the tool, semtag, he had discarded earlier and tweaked 
+semantic-version. He put those two tools together to see what happens.
 
 
 To be continued...
