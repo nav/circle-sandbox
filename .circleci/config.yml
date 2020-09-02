@@ -50,6 +50,7 @@ jobs:
             else
               SCOPE=patch
             fi
+            ./scripts/semtag final -s ${SCOPE}
 
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
