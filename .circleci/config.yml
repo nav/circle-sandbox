@@ -45,7 +45,6 @@ jobs:
             git config user.name "CircleCI"
             npx standard-version \
               --no-verify \
-              --skip.bump \
               --skip.tag \
               --skip.commit
 
@@ -62,7 +61,6 @@ jobs:
             VERSION=$(git describe --tags --abbrev=0)
 
             cat CHANGELOG.md
-            git add CHANGELOG.md            
             git commit --no-verify CHANGELOG.md -m "chore(release): ${VERSION} [skip ci]"
             git push --follow-tags origin dev
 
