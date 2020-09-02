@@ -60,7 +60,9 @@ jobs:
               --skip.bump \
               --skip.tag \
               --skip.commit
-            
+
+            cat CHANGELOG.md
+            git add CHANGELOG.md            
             git commit --no-verify CHANGELOG.md -m "chore(release): ${VERSION} [skip ci]"
             git push --follow-tags origin dev
 
