@@ -51,16 +51,18 @@ jobs:
               SCOPE=patch
             fi
             ./scripts/semtag final -s ${SCOPE}
+            VERSION=$(cat describe --tags --abbrev=0)
 
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
             npx standard-version \
               --no-verify \
+              --skip.bump \
               --skip.tag \
-              --releaseCommitMessageFormat="chore(release): {{currentTag}} [skip ci]"
+              --releaseCommitMessageFormat="chore(release): ${VERSION} [skip ci]"
             git push --follow-tags origin dev
 
-            echo $(git describe --tags --abbrev=0) > VERSION
+            echo ${VERSION} > VERSION
       - persist_to_workspace:
           root: *workspace
           paths:
