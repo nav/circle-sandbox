@@ -51,7 +51,7 @@ jobs:
               SCOPE=patch
             fi
             ./scripts/semtag final -s ${SCOPE}
-            VERSION=$(cat describe --tags --abbrev=0)
+            VERSION=$(git describe --tags --abbrev=0)
 
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
