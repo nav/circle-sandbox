@@ -41,29 +41,12 @@ jobs:
             mkdir -p ~/.ssh
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
-            COMMIT_MSG=$(git log -1 --pretty=%B | cat)
-            COMMIT_MSG="$(echo $COMMIT_MSG | tr '[A-Z]' '[a-z]')"
-            if [[ ${COMMIT_MSG} =~ ^.*\#major.*$ ]]; then
-              SCOPE=major
-            elif [[ ${COMMIT_MSG} =~ ^.*\#minor.*$ ]]; then
-              SCOPE=minor
-            else
-              SCOPE=patch
-            fi
-            ./scripts/semtag final -s ${SCOPE}
-            VERSION=$(git describe --tags --abbrev=0)
-
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
-            npx standard-version \
-              --no-verify \
-              --skip.tag \
-              --skip.commit
+            npx standard-version --no-verify 
 
             cat CHANGELOG.md
-            git commit --no-verify CHANGELOG.md -m "chore(release): ${VERSION} [skip ci]"
-            git push --follow-tags origin dev
-
+            VERSION=$(git describe --tags --abbrev=0)
             echo ${VERSION} > VERSION
       - persist_to_workspace:
           root: *workspace
