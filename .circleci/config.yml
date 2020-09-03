@@ -43,10 +43,11 @@ jobs:
 
             git config user.email "engineering@nav.sh"
             git config user.name "CircleCI"
-            npx standard-version --no-verify 
+            npx standard-version \
+                --no-verify \
+                --releaseCommitMessageFormat="chore(release): {{currentTag}} [skip ci]"
             git push --follow-tags origin dev
 
-            cat CHANGELOG.md
             VERSION=$(git describe --tags --abbrev=0)
             echo ${VERSION} > VERSION
       - persist_to_workspace:
