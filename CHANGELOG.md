@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/nav/circle-sandbox/compare/v1.1.1...v1.2.0) (2020-09-03)
+
+
+### Features
+
+* **ci:** Thou float'st like a feather ([9e1d3b6](https://github.com/nav/circle-sandbox/commit/9e1d3b6709f59e1327806660313a6a7e7afe483d))
+
 ### [1.1.1](https://github.com/nav/circle-sandbox/compare/v1.1.0...v1.1.1) (2020-09-03)
 
 ## 1.1.0 (2020-09-03)
