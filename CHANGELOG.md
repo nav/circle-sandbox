@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/nav/circle-sandbox/compare/v1.1.0...v1.1.1) (2020-09-03)
+
+
+### Bug Fixes
+
+* **ci:** Testing fix ([15112f3](https://github.com/nav/circle-sandbox/commit/15112f3cfc3da95ecffb657edf909ce31b8f7153))
+
 ## 1.1.0 (2020-09-03)
 
 
